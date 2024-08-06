@@ -1,3 +1,4 @@
+// Login.js
 import { Alert } from '@mui/material';
 import React, { useState } from 'react';
 import { FaFacebook, FaGoogle } from 'react-icons/fa';
@@ -21,7 +22,7 @@ const Login = () => {
     setShowSuccessAlert(false); // Resetear alerta de éxito
 
     try {
-      const response = await fetch('http://localhost/webJacketOn/server/login.php', {
+      const response = await fetch('http://localhost:8080/webJacketOn/server/login.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,6 +35,9 @@ const Login = () => {
       if (data.success) {
         // Mostrar alerta de login exitoso
         setShowSuccessAlert(true);
+        // Guardar sesión en localStorage
+        localStorage.setItem('userSession', JSON.stringify({ email }));
+
         setTimeout(() => {
           setShowSuccessAlert(false);
           navigate('/supervisores');

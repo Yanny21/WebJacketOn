@@ -8,7 +8,16 @@ const GestSup = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost/webJacketOn/server/getSupervisors.php')
+    const session = JSON.parse(localStorage.getItem('userSession'));
+    if (!session) {
+      navigate('/login');
+    } else {
+      fetchSupervisors();
+    }
+  }, []);
+
+  const fetchSupervisors = () => {
+    fetch('http://localhost:8080/webJacketOn/server/getSupervisors.php')
       .then(response => response.json())
       .then(data => {
         console.log("Fetched data:", data); // Log para verificar datos recibidos
@@ -17,7 +26,7 @@ const GestSup = () => {
       .catch(error => {
         console.error("Fetch error:", error);
       });
-  }, []);
+  };
 
   const handleAgregarSupervisor = () => {
     navigate('/registro');
@@ -29,7 +38,7 @@ const GestSup = () => {
 
   const handleEliminarSupervisor = (id) => {
     if (window.confirm("¿Estás seguro de eliminar este supervisor?")) {
-      fetch(`http://localhost/webJacketOn/server/updateSupervisorStatus.php?id_usu=${id}&estatus=0`, {
+      fetch(`http://localhost:8080/webJacketOn/server/updateSupervisorStatus.php?id_usu=${id}&estatus=0`, {
         method: 'POST',
       })
       .then(response => response.json())

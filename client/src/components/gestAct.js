@@ -1,12 +1,60 @@
-import React, { useState } from 'react';
+// GestAct.js
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Dash.css';
 import Sidebar from './Sidebar';
 
 const GestAct = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [activities, setActivities] = useState([]);
+  const navigate = useNavigate();
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
+  useEffect(() => {
+    const session = JSON.parse(localStorage.getItem('userSession')); //aquí se toma la variable de sesión
+    if (!session) { //si no hay sesión entonces manda a la vista del login
+      navigate('/login');
+    } else {// entonces si sí hay, manda  a la vista o arreglo de actividades
+      fetchActivities();
+    }
+  }, []);
+
+  const fetchActivities = () => {
+    fetch('http://localhost:8080/webJacketOn/server/getActivities.php')
+      .then(response => response.json())
+      .then(data => {
+        console.log("Fetched activities:", data); 
+        setActivities(data);
+      })
+      .catch(error => {
+        console.error("Fetch error:", error);
+      });
+  };
+
+  const handleAgregarActividad = () => {
+    navigate('/agregar'); 
+  };
+
+  const handleEditarActividad = (id) => {
+    navigate(`/editar/${id}`);
+  };
+
+  const handleEliminarActividad = (id) => {
+    if (window.confirm("¿Estás seguro de eliminar esta actividad?")) {
+      fetch(`http://localhost:8080/webJacketOn/server/deleteActivity.php?id_act=${id}`, {
+        method: 'DELETE',
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Actualizar la lista de actividades después de eliminar
+          setActivities(activities.filter(activity => activity.id_act !== id));
+        } else {
+          alert('Error eliminando actividad: ' + data.error);
+        }
+      })
+      .catch(error => {
+        console.error('Fetch error:', error);
+      });
+    }
   };
 
   return (
@@ -24,28 +72,31 @@ const GestAct = () => {
                 <th>Fecha inicio</th>
                 <th>Fecha fin</th>
                 <th>Area</th>
+                <th>Asignado a</th>
                 <th>Asignó</th>
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Nombre1</td>
-                <td>11/11/2024</td>
-                <td>12/11/2024</td>
-                <td>13/11/2024</td>
-                <td>14/11/2024</td>
-                <td>Inyeccion</td>
-                <td>Yanny Moreno</td>
-                <td>
-                  <button className="btn btn-edit">Editar</button>
-                  <button className="btn btn-delete">Eliminar</button>
-                </td>
-              </tr>
-              {/* Más filas aquí */}
+              {activities.map(activity => (
+                <tr key={activity.id_act}>
+                  <td>{activity.actividad}</td>
+                  <td>{activity.fech_asig}</td>
+                  <td>{activity.fech_lim}</td>
+                  <td>{activity.fech_ini}</td>
+                  <td>{activity.fech_fin}</td>
+                  <td>{activity.area}</td>
+                  <td>{activity.nom_usu_asignado}</td>
+                  <td>{activity.nom_usu_que_asigno}</td>
+                  <td>
+                    <button className="btn btn-edit" onClick={() => handleEditarActividad(activity.id_act)}>Editar</button>
+                    <button className="btn btn-delete" onClick={() => handleEliminarActividad(activity.id_act)}>Eliminar</button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
-          <button className="btn btn-add">+ AGREGAR NUEVO EMPLEADO</button>
+          <button className="btn btn-add" onClick={handleAgregarActividad}>+ AGREGAR NUEVA ACTIVIDAD</button>
         </section>
       </main>
     </div>
