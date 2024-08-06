@@ -1,0 +1,189 @@
+body {
+  margin: 0; /* Elimina el margen predeterminado del cuerpo */
+  font-family: "Montserrat", sans-serif;
+}
+
+.dashboard {
+  display: flex; /* Utiliza el modelo de caja flexible (flexbox) */
+  min-height: 100vh; /* Establece la altura mínima del dashboard como 100% de la altura de la ventana */
+}
+
+.sidebar {
+  width: 250px; /* Ancho fijo de la barra lateral */
+  background-color: #333557; /* Color de fondo */
+  color: #ecf0f1; /* Color del texto */
+  display: flex; /* Utiliza flexbox para organizar el contenido */
+  flex-direction: column; /* Organiza los elementos en columnas */
+  padding: 15px; /* Espaciado interno */
+  margin: 0; /* Elimina el margen exterior */
+}
+
+.sidebar h2 {
+  text-align: center; /* Centra el texto */
+}
+
+.sidebar nav ul {
+  list-style: none; /* Elimina los estilos de viñetas de la lista */
+  padding: 0; /* Elimina el relleno predeterminado */
+}
+
+.sidebar nav ul li {
+  margin: 50px 0; /* Establece el margen vertical entre los ítems de la lista */
+}
+
+.sidebar nav ul li a {
+  color: #ecf0f1; /* Color del texto */
+  text-decoration: none; /* Elimina el subrayado predeterminado de los enlaces */
+}
+
+.sidebar nav ul li a:hover {
+  color: #F2E527; /* Cambia el color del texto al pasar el cursor */
+  text-decoration: none; /* Asegura que no haya subrayado */
+}
+
+.sidebar nav ul li a.active {
+  color: #F2E527; /* Cambia el color del texto cuando es activo */
+  text-decoration: none; /* Asegura que no haya subrayado */
+}
+
+.main-content {
+  flex-grow: 1; /* Permite que el contenido principal ocupe todo el espacio disponible */
+  padding: 0; /* Elimina el relleno predeterminado */
+  margin: 0; /* Elimina el margen predeterminado */
+}
+
+.header {
+  display: flex; /* Utiliza flexbox para organizar el contenido */
+  justify-content: space-between; /* Distribuye el contenido de manera uniforme */
+  align-items: center; /* Centra verticalmente los elementos */
+  padding: 20px 20px 10px 50px; /* Añade más espacio a la izquierda */
+  background-color: #010440; /* Color de fondo */
+  color: #ecf0f1; /* Color del texto */
+  width: calc(100% - 250px); /* Calcula el ancho menos el ancho de la barra lateral */
+  position: fixed; /* Fija el encabezado en la parte superior */
+  top: 0; /* Coloca el encabezado en la parte superior */
+  z-index: 1; /* Capa z para asegurar que esté por encima del contenido */
+  font-size: 15px;
+}
+
+.header-right {
+  display: flex; /* Utiliza flexbox para organizar el contenido */
+  align-items: center; /* Centra verticalmente los elementos */
+}
+
+.search-container {
+  position: relative;
+}
+
+.search-container svg {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.header-right input[type="text"] {
+  padding: 9px 9px 9px 35px; /* Espaciado interno para dejar espacio al icono */
+  margin-right: 35px; /* Ajusta el margen derecho para dejar espacio al icono de usuario */
+  border-radius: 12px; /* Borde redondeado */
+  max-width: 200px; /* Ancho máximo del campo de búsqueda */
+  width: 100%; /* Asegura que el campo ocupe el 100% del espacio disponible dentro del contenedor */
+}
+
+.user-icon-container {
+  position: relative; /* Posicionamiento relativo para el menú desplegable */
+  padding-right: 120px;
+  display: inline-block; /* Display inline-block para mantener la alineación */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el icono */
+  margin-left: 20px; /* Añade margen izquierdo para separar el icono del campo de búsqueda */
+}
+
+.dropdown-menu {
+  display: none; /* Oculto por defecto */
+  position: absolute; /* Posicionamiento absoluto */
+  right: 0; /* Alineado a la derecha del contenedor */
+  background-color: #fff; /* Color de fondo */
+  min-width: 160px; /* Ancho mínimo */
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Sombra */
+  z-index: 1; /* Asegura que el menú esté por encima de otros elementos */
+  border-radius: 8px; /* Borde redondeado */
+}
+
+.dropdown-menu a {
+  color: black; /* Color del texto */
+  padding: 12px 16px; /* Espaciado interno */
+  text-decoration: none; /* Elimina el subrayado */
+  display: block; /* Display block para que ocupe todo el ancho */
+}
+
+.dropdown-menu a:hover {
+  background-color: #ddd; /* Color de fondo al pasar el cursor */
+}
+
+.user-icon-container.show .dropdown-menu {
+  display: block;
+}
+
+.employee-management {
+  padding: 20px; /* Espaciado interno */
+  padding-top: 110px; /* Añade espacio en la parte superior para evitar que el contenido se superponga con el encabezado fijo */
+  text-align: center; /* Centra horizontalmente el contenido */
+}
+
+.employee-management h1 {
+  color: #D9BB25; /* Color del texto */
+  text-align: center; /* Centra el texto */
+  font-size: 35px;
+}
+
+.table {
+  width: 100%; /* Ancho completo */
+  border-collapse: collapse; /* Colapsa los bordes de la tabla */
+  margin-top: 20px; /* Margen superior */
+}
+
+.table th, .table td {
+  padding: 10px; /* Espaciado interno */
+}
+
+.table th {
+  background-color: #F2E527; /* Color de fondo */
+  color: #ffff; /* Color del texto */
+}
+
+.table td {
+  text-align: center; /* Centra el texto */
+}
+
+.btn {
+  padding: 5px 10px; /* Espaciado interno */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  font-size: 14px; /* Tamaño del texto */
+}
+
+.btn-edit {
+  background-color: #EEEEEE; /* Color de fondo */
+  color: #000; /* Color del texto */
+  margin-right: 5px; /* Margen derecho */
+}
+
+.btn-delete {
+  background-color: #F2E527; /* Color de fondo */
+  color: #fff; /* Color del texto */
+}
+
+.btn-add {
+  background-color: #F2E527; /* Color de fondo */
+  color: #fff; /* Color del texto con transparencia */
+  padding: 10px 20px; /* Espaciado interno */
+  margin-top: 20px; /* Margen superior */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  font-size: 16px; /* Tamaño del texto */
+  justify-content: center; /* Centra horizontalmente el contenido */
+}
+
+.sidebar nav ul li.active a {
+  color: #F2E527; /* Color fijo para el texto activo */
+}
