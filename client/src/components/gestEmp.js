@@ -14,10 +14,10 @@ const GestEmp = () => {
     } else {
       fetchEmployees();
     }
-  }, []);
+  }, [navigate]); // Incluye 'navigate' en el array de dependencias
 
   const fetchEmployees = () => {
-    fetch('http://localhost:8080/webJacketOn/server/getEmployees.php')
+    fetch('http://localhost/webJacketOn/server/getEmployees.php')
       .then(response => response.json())
       .then(data => {
         console.log("Fetched data:", data); // Log para verificar datos recibidos
@@ -29,16 +29,16 @@ const GestEmp = () => {
   };
 
   const handleAgregarEmpleado = () => {
-    navigate('/registroEmpleado');
+    navigate('/registroEmp');
   };
 
   const handleEditarEmpleado = (id) => {
-    navigate(`/editarEmpleado/${id}`);
+    navigate(`/editEmp/${id}`);
   };
 
   const handleEliminarEmpleado = (id) => {
     if (window.confirm("¿Estás seguro de eliminar este empleado?")) {
-      fetch(`http://localhost:8080/webJacketOn/server/updateEmployeeStatus.php?id_usu=${id}&estatus=0`, {
+      fetch(`http://localhost/webJacketOn/server/updateEmployeeStatus.php?id_usu=${id}&estatus=0`, {
         method: 'POST',
       })
       .then(response => response.json())

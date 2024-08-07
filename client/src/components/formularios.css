@@ -229,3 +229,17 @@ body {
 .pregunta-cuenta-button:hover {
   background-color: #F2E527;
 }
+
+.login-form label {
+  display: block;
+  margin-top: 10px;
+  color: white;
+  text-align: left; /* Alinear el texto a la izquierda */
+  
+}
+
+.login-form input[type="date"] {
+  display: block;
+  margin-top: 5px;
+  
+}

@@ -15,7 +15,7 @@ const Sidebar = (props) => {
       <aside className="sidebar">
         <h2>Jacket - On</h2>
         <nav>
-        <ul>
+          <ul>
             <li className={` ${location.pathname === '/supervisores' ? 'active current' : ''}`}>
               <Link to="/supervisores">GESTION DE SUPERVISORES</Link>
             </li>
@@ -25,8 +25,8 @@ const Sidebar = (props) => {
             <li className={` ${location.pathname === '/actividades' ? 'active current' : ''}`}>
               <Link to="/actividades">GESTION DE ACTIVIDADES</Link>
             </li>
-            <li className={` ${location.pathname === '/graficas-reportes' ? 'active current' : ''}`}>
-              <Link to="/graficas-reportes">GRAFICAS Y REPORTES</Link>
+            <li className={` ${location.pathname === '/graficasyrep' ? 'active current' : ''}`}>
+              <Link to="/graficasyrep">GRAFICAS Y REPORTES</Link>
             </li>
             <li className={` ${location.pathname === '/metricas' ? 'active current' : ''}`}>
               <Link to="/metricas">METRICAS</Link>
@@ -54,8 +54,8 @@ const Sidebar = (props) => {
                 <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
               </svg>
               <div className="dropdown-menu">
-                <a href="#">Editar perfil</a>
-                <a href="#">Cerrar sesión</a>
+                <button onClick={() => console.log('Editar perfil')}>Editar perfil</button>
+                <button onClick={() => console.log('Cerrar sesión')}>Cerrar sesión</button>
               </div>
             </div>
           </div>

@@ -22,7 +22,7 @@ const Registro = () => {
     formData.append('email_usu', email);
     formData.append('pass_usu', password);
 
-    fetch('http://localhost:8080/webJacketOn/server/registerSupervisor.php', {
+    fetch('http://localhost/webJacketOn/server/registerSupervisor.php', {
       method: 'POST',
       body: formData
     })
@@ -55,7 +55,7 @@ const Registro = () => {
             <input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
             <button type="submit" className="login-button">Registrar</button>
           </form>
-          <button className="pregunta-cuenta-button" onClick={handleRegresar}>Regresar</button>
+          <button className="pregunta-cuenta-button" onClick={handleRegresar}>Volver</button>
         </div>
       </main>
     </div>
