@@ -11,7 +11,7 @@ const Editar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost/webJacketOn/server/getSupervisor.php?id_usu=${id}`)
+    fetch(`http://localhost:8080/webJacketOn/server/getSupervisor.php?id_usu=${id}`)
       .then(response => response.json())
       .then(data => {
         if (data.error) {
