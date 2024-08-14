@@ -9,6 +9,7 @@ import GestEmp from './components/gestEmp';
 import GestSup from './components/gestSup';
 import Graficasyrep from './components/graficasyreportes';
 import Login from './components/Login';
+import Mapa from './components/mapa';
 import Metricas from './components/metricas';
 import Registro from './components/registro';
 import RegistroAct from './components/registroAct';
@@ -30,6 +31,7 @@ const AppRouter = () => (
       <Route path="/asignaAct" element={<AsignaAct />} />
       <Route path="/editEmp/:id" element={<EditEmp />} /> {/* ARROBAFER TRAES DESDE AQUI EL ID, ES UNA RUTA CON PARAMETRO ID */}
       <Route path="/editAct/:id" element={<EditAct />} />
+      <Route path="/mapa" element={<Mapa />} />
       <Route exact path="/" element={<Login />} /> {/* Ruta por defecto */}
     </Routes>
   </Router>

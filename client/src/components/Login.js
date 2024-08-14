@@ -2,7 +2,6 @@ import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode'; // Named export
 import React, { useState } from 'react';
-import { FaFacebook } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './formularios.css';
@@ -149,7 +148,6 @@ const Login = () => {
                 cookiePolicy={'single_host_origin'}
               />
             </GoogleOAuthProvider>
-            <button className="facebook-login"><FaFacebook /> Facebook</button>
           </div>
         </div>
       </main>
