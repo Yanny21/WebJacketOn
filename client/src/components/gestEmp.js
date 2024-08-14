@@ -14,17 +14,16 @@ const GestEmp = () => {
     } else {
       fetchEmployees();
     }
-  }, [navigate]); // Incluye 'navigate' en el array de dependencias
+  }, [navigate]);
 
   const fetchEmployees = () => {
-    fetch('http://localhost/webJacketOn/server/getEmployees.php')
+    fetch('http://localhost:8080/webJacketOn/server/getEmployees.php')
       .then(response => response.json())
       .then(data => {
-        console.log("Fetched data:", data); // Log para verificar datos recibidos
         setEmployees(data);
       })
       .catch(error => {
-        console.error("Fetch error:", error);
+        console.error("Error fetching employees:", error);
       });
   };
 
@@ -36,23 +35,24 @@ const GestEmp = () => {
     navigate(`/editEmp/${id}`);
   };
 
-  const handleEliminarEmpleado = (id) => {
-    if (window.confirm("¿Estás seguro de eliminar este empleado?")) {
-      fetch(`http://localhost/webJacketOn/server/updateEmployeeStatus.php?id_usu=${id}&estatus=0`, {
+  const handleToggleStatus = (id, currentStatus) => {
+    const newStatus = currentStatus === 1 ? 0 : 1;
+    const action = newStatus === 0 ? 'eliminar' : 'activar';
+    if (window.confirm(`¿Estás seguro de ${action} este empleado?`)) {
+      fetch(`http://localhost:8080/webJacketOn/server/updateEmployeeStatus.php?id_usu=${id}&estatus=${newStatus}`, {
         method: 'POST',
       })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          // Vuelve a hacer una solicitud para obtener la lista actualizada de empleados
-          fetchEmployees();
-        } else {
-          alert('Error eliminando empleado: ' + data.error);
-        }
-      })
-      .catch(error => {
-        console.error('Fetch error:', error);
-      });
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            fetchEmployees(); // Actualiza la lista de empleados
+          } else {
+            alert(`Error al ${action} empleado: ${data.error}`);
+          }
+        })
+        .catch(error => {
+          console.error(`Error al ${action} empleado:`, error);
+        });
     }
   };
 
@@ -78,10 +78,15 @@ const GestEmp = () => {
                   <td>{employee.nom_usu}</td>
                   <td>{employee.app_usu}</td>
                   <td>{employee.email_usu}</td>
-                  <td>{employee.estatus === 0 ? 'Inactivo' : 'Activo'}</td>
+                  <td>{employee.estatus === 1 ? 'Activo' : 'Inactivo'}</td>
                   <td>
                     <button className="btn btn-edit" onClick={() => handleEditarEmpleado(employee.id_usu)}>Editar</button>
-                    <button className="btn btn-delete" onClick={() => handleEliminarEmpleado(employee.id_usu)}>Eliminar</button>
+                    <button
+                      className="btn btn-delete"
+                      onClick={() => handleToggleStatus(employee.id_usu, employee.estatus)}
+                    >
+                      {employee.estatus === 1 ? 'Eliminar' : 'Activar'}
+                    </button>
                   </td>
                 </tr>
               ))}

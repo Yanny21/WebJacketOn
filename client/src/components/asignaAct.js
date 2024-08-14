@@ -22,7 +22,7 @@ const AsignaAct = () => {
     setShowSuccessAlert(false); // Resetear alerta de éxito
 
     try {
-      const response = await fetch('http://localhost/webJacketOn/server/actividades.php', {
+      const response = await fetch('http://localhost:8080/webJacketOn/server/actividades.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

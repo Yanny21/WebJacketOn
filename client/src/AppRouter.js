@@ -28,8 +28,8 @@ const AppRouter = () => (
       <Route path="/registroEmp" element={<RegistroEmp />} />
       <Route path="/editar/:id" element={<Editar />} /> {/* Ruta con parámetro :id */}
       <Route path="/asignaAct" element={<AsignaAct />} />
-      <Route path="/editEmp" element={<EditEmp />} /> {/* ARROBAFER TRAES DESDE AQUI EL ID, ES UNA RUTA CON PARAMETRO ID */}
-      <Route path="/editAct" element={<EditAct />} />
+      <Route path="/editEmp/:id" element={<EditEmp />} /> {/* ARROBAFER TRAES DESDE AQUI EL ID, ES UNA RUTA CON PARAMETRO ID */}
+      <Route path="/editAct/:id" element={<EditAct />} />
       <Route exact path="/" element={<Login />} /> {/* Ruta por defecto */}
     </Routes>
   </Router>

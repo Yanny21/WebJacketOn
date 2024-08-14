@@ -12,7 +12,7 @@ $sql = "SELECT a.id_act, a.actividad, a.fech_asig, a.fech_lim, a.fech_ini, a.fec
                u2.nom_usu AS nom_usu_que_asigno
         FROM actividades a
         JOIN usuarios u1 ON a.id_usu_asignado = u1.id_usu
-        JOIN usuarios u2 ON a.id_usu_que_asigno = u2.id_usu";
+        JOIN usuarios u2 ON a.id_usu_que_asigno = u2.id_usu where a.estatus=1";
 $result = $conn->query($sql);
 
 $activities = array();

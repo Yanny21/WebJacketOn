@@ -1,4 +1,3 @@
-// GestAct.js
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Dash.css';
@@ -9,19 +8,19 @@ const GestAct = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const session = JSON.parse(localStorage.getItem('userSession')); //aquí se toma la variable de sesión
-    if (!session) { //si no hay sesión entonces manda a la vista del login
+    const session = JSON.parse(localStorage.getItem('userSession'));
+    if (!session) {
       navigate('/login');
-    } else {// entonces si sí hay, manda  a la vista o arreglo de actividades
+    } else {
       fetchActivities();
     }
-  }, []);
+  }, [navigate]);
 
   const fetchActivities = () => {
-    fetch('http://localhost/webJacketOn/server/getActivities.php')
+    fetch('http://localhost:8080/webJacketOn/server/getActivities.php')
       .then(response => response.json())
       .then(data => {
-        console.log("Fetched activities:", data); 
+        console.log("Fetched activities:", data);
         setActivities(data);
       })
       .catch(error => {
@@ -30,7 +29,7 @@ const GestAct = () => {
   };
 
   const handleAgregarActividad = () => {
-    navigate('/registroAct'); 
+    navigate('/registroAct');
   };
 
   const handleEditarActividad = (id) => {
@@ -39,13 +38,12 @@ const GestAct = () => {
 
   const handleEliminarActividad = (id) => {
     if (window.confirm("¿Estás seguro de eliminar esta actividad?")) {
-      fetch(`http://localhost/webJacketOn/server/deleteActivity.php?id_act=${id}`, {
-        method: 'DELETE',
+      fetch(`http://localhost:8080/webJacketOn/server/deleteActivity.php?id_act=${id}&estatus=0`, {
+        method: 'POST',
       })
       .then(response => response.json())
       .then(data => {
         if (data.success) {
-          // Actualizar la lista de actividades después de eliminar
           setActivities(activities.filter(activity => activity.id_act !== id));
         } else {
           alert('Error eliminando actividad: ' + data.error);
@@ -56,6 +54,7 @@ const GestAct = () => {
       });
     }
   };
+  
 
   return (
     <div className="dashboard">

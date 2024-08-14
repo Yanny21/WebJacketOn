@@ -2,7 +2,7 @@
 function openConnection() {
     $servername = "localhost";
     $username = "root";
-    $password = "Moreno0310SM21";
+    $password = "Fernanda0202";
     $dbname = "jacketon";
 
     $conn = new mysqli($servername, $username, $password, $dbname);

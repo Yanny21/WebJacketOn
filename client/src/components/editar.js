@@ -42,7 +42,7 @@ const Editar = () => {
     formData.append('email_usu', email);
     formData.append('pass_usu', password);
 
-    fetch('http://localhost/webJacketOn/server/updateSupervisor.php', {
+    fetch('http://localhost:8080/webJacketOn/server/updateSupervisor.php', {
       method: 'POST',
       body: formData
     })
