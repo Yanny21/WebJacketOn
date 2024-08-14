@@ -14,8 +14,8 @@ const GestSup = () => {
     } else {
       fetchSupervisors();
     }
-  }, []);
-
+  }, [navigate]); // Agrega navigate aquí
+  
   const fetchSupervisors = () => {
     fetch('http://localhost/webJacketOn/server/getSupervisors.php')
       .then(response => response.json())

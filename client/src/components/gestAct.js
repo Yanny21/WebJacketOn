@@ -15,7 +15,7 @@ const GestAct = () => {
     } else {// entonces si sí hay, manda  a la vista o arreglo de actividades
       fetchActivities();
     }
-  }, []);
+  }, [navigate]);
 
   const fetchActivities = () => {
     fetch('http://localhost/webJacketOn/server/getActivities.php')

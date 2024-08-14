@@ -1,25 +1,20 @@
-// Login.js
-import { Alert } from '@mui/material';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode'; // Named export
 import React, { useState } from 'react';
-import { FaFacebook, FaGoogle } from 'react-icons/fa';
+import { FaFacebook } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import './formularios.css';
 
 const Login = () => {
+  const clientId = "640528397519-uv5d8no0n9hf5gsglt3ci5meedalq6kc.apps.googleusercontent.com";
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [showWarningAlert, setShowWarningAlert] = useState(false);
-  const [showInfoAlert, setShowInfoAlert] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError('');
-    setShowWarningAlert(false); // Resetear alerta de advertencia
-    setShowInfoAlert(false); // Resetear alerta de información
-    setShowSuccessAlert(false); // Resetear alerta de éxito
 
     try {
       const response = await fetch('http://localhost/webJacketOn/server/login.php', {
@@ -33,27 +28,89 @@ const Login = () => {
       const data = await response.json();
       
       if (data.success) {
-        // Mostrar alerta de login exitoso
-        setShowSuccessAlert(true);
-        // Guardar sesión en localStorage
-        localStorage.setItem('userSession', JSON.stringify({ email }));
-
-        setTimeout(() => {
-          setShowSuccessAlert(false);
-          navigate('/supervisores');
-        }, 3000); // Ocultar la alerta después de 3 segundos y redirigir
+        Swal.fire({
+          title: '¡Inicio de sesión exitoso!',
+          icon: 'success',
+          text: data.message,
+        }).then(() => {
+          localStorage.setItem('userSession', JSON.stringify({ email }));
+          navigate('/supervisores'); // Redirige a la vista de gestión de supervisores
+        });
       } else {
-        // Mostrar alertas según el mensaje recibido
-        if (data.message === 'Ya tienes una sesión activa en otro dispositivo.') {
-          setShowInfoAlert(true); // Mostrar alerta de información
-        } else {
-          setShowWarningAlert(true); // Mostrar alerta de advertencia
-        }
-        setError(data.message); // Mostrar el mensaje de error específico
+        Swal.fire({
+          title: '¡Ups!',
+          icon: 'warning',
+          text: data.message,
+        });
       }
     } catch (error) {
-      setError('Error al conectarse con el servidor.');
+      console.error('Error al realizar la solicitud:', error);
+      Swal.fire({
+        title: 'Error al conectarse con el servidor',
+        icon: 'error',
+        text: error.message,
+      });
     }
+  };
+
+  const handleGoogleLoginSuccess = (response) => {
+    console.log('Google Login Response:', response);
+    try {
+      const decoded = jwtDecode(response.credential); // Usa jwtDecode aquí
+      const email = decoded.email || decoded.email_address;
+
+      if (email) {
+        axios.post('http://localhost/webJacketOn/server/googleLogin.php', {
+          email: email
+        }).then((response) => {
+          if (response.data.success) {
+            Swal.fire({
+              title: '¡Inicio de sesión exitoso!',
+              icon: 'success',
+              text: 'Has iniciado sesión con Google.',
+            }).then(() => {
+              localStorage.setItem('userSession', JSON.stringify({ email }));
+              navigate('/supervisores'); // Redirigir a la vista de gestión de supervisores
+            });
+          } else {
+            Swal.fire({
+              title: '¡Ups!',
+              icon: 'warning',
+              text: response.data.message,
+            });
+          }
+        }).catch((error) => {
+          console.error('Error al realizar la solicitud', error);
+          Swal.fire({
+            title: 'Error al realizar la solicitud',
+            icon: 'error',
+            text: error.message,
+          });
+        });
+      } else {
+        Swal.fire({
+          title: 'Error',
+          icon: 'error',
+          text: 'No se pudo obtener el correo electrónico.',
+        });
+      }
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      Swal.fire({
+        title: 'Error',
+        icon: 'error',
+        text: 'Error al procesar la respuesta de Google.',
+      });
+    }
+  };
+
+  const handleGoogleLoginFailure = () => {
+    console.log('Google Login Failed');
+    Swal.fire({
+      title: 'Error',
+      icon: 'error',
+      text: 'Error al iniciar sesión con Google.',
+    });
   };
 
   return (
@@ -65,21 +122,6 @@ const Login = () => {
         <div className="login-form-container">
           <h2>Inicio de sesión</h2>
           <p>Ingrese sus datos para ingresar</p>
-          {showSuccessAlert && (
-            <Alert severity="success" variant="filled" style={{ marginBottom: '10px' }}>
-              ¡Inicio de sesión exitoso!
-            </Alert>
-          )}
-          {showWarningAlert && (
-            <Alert severity="warning" variant="filled" style={{ marginBottom: '10px' }}>
-              El correo electrónico o la contraseña son incorrectos.
-            </Alert>
-          )}
-          {showInfoAlert && (
-            <Alert severity="info" variant="filled" style={{ marginBottom: '10px' }}>
-              Ya tienes una sesión activa en otro dispositivo.
-            </Alert>
-          )}
           <form className="login-form" onSubmit={handleSubmit}>
             <input 
               type="email" 
@@ -96,14 +138,17 @@ const Login = () => {
               required
             />
             <button type="submit" className="login-button">Ingresar</button>
-            {/* Mostrar el mensaje de error solo si no hay alertas específicas */}
-            {error && !showSuccessAlert && !showWarningAlert && !showInfoAlert && (
-              <p className="error-message">{error}</p>
-            )}
           </form>
           <p className="continuar-con">Continuar con</p>
           <div className="social-login">
-            <button className="google-login"><FaGoogle /> Google</button>
+            <GoogleOAuthProvider clientId={clientId}>
+              <GoogleLogin 
+                clientId={clientId}
+                onSuccess={handleGoogleLoginSuccess}
+                onFailure={handleGoogleLoginFailure}
+                cookiePolicy={'single_host_origin'}
+              />
+            </GoogleOAuthProvider>
             <button className="facebook-login"><FaFacebook /> Facebook</button>
           </div>
         </div>
