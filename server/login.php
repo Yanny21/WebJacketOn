@@ -3,6 +3,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: POST");
 
+
 include 'db_connection.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
@@ -15,7 +16,7 @@ if (empty($email) || empty($password)) {
 }
 
 $conn = openConnection();
-$sql = "SELECT id_usu, email_usu, pass_usu, tipo_usu, sesion FROM usuarios WHERE email_usu = ?";
+$sql = "SELECT * FROM usuarios WHERE email_usu = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $email);
 $stmt->execute();

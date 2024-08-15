@@ -1,11 +1,12 @@
 <?php
 function openConnection() {
-    $servername = "localhost";
-    $username = "root";
-    $password = "Moreno0310SM21";
-    $dbname = "jacketon";
+    $servername = "dtai.uteq.edu.mx";
+    $username = "lunjos219";
+    $port = 3306;
+    $password = "ljj@2022371175";
+    $dbname = "bd_awi4_lunjos219";
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($servername, $username, $password, $dbname, $port);
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
