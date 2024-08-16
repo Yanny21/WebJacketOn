@@ -156,6 +156,11 @@ body {
   text-align: center; /* Centra el texto */
 }
 
+.tdG{
+  font-size: 13.5px; /* Tamaño del texto */
+  text-align: center; /* Centra el texto */
+
+}
 .btn {
   padding: 5px 10px; /* Espaciado interno */
   border: none; /* Sin borde */
@@ -258,4 +263,34 @@ body {
   width: 100%;
   max-width: 800px; /* Ajusta según sea necesario */
   margin: 0 auto;
+}
+
+
+.btn-map {
+  background-color: #2196F3;
+  color: white;
+}
+
+.modal {
+  position: relative;
+  width: 80%;
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.modal .map-container {
+  height: 400px; /* Ajusta la altura del contenedor del mapa según sea necesario */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
 }

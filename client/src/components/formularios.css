@@ -20,7 +20,8 @@ body {
 .registro-header h1 {
   font-size: 32px;
   color: #000;
-  margin-top: 20px;
+  margin-top: 150px;
+  margin-bottom: 50px;
 }
 
 .registro-main {
@@ -242,4 +243,65 @@ body {
   display: block;
   margin-top: 5px;
   
+}
+
+/* Estilos para los elementos <select> */
+.login-form select {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #2f2f2f;
+  border-radius: 8px;
+  background-color: #2f2f2f;
+  color: #fff;
+  font-size: 16px;
+  appearance: none; /* Elimina el estilo predeterminado de los navegadores */
+  cursor: pointer;
+}
+
+/* Estilo del ícono de flecha en el select (solo si deseas personalizarlo) */
+.login-form select::-ms-expand {
+  display: none; /* Oculta la flecha predeterminada en IE */
+}
+
+.login-form select:hover {
+  background-color: #a5a2a2; /* Cambia el color al pasar el cursor */
+}
+
+.login-form select:focus {
+  outline: none; /* Elimina el borde azul al enfocar */
+  border-color: #F2E527; /* Cambia el borde al color principal */
+}
+
+/* Estilo para los elementos select */
+.login-form select {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #2f2f2f;
+  border-radius: 8px;
+  background-color: #2f2f2f;
+  color: #fff;
+  font-size: 16px;
+}
+
+/* Estilo para el textarea */
+.login-form textarea {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #2f2f2f;
+  border-radius: 8px;
+  background-color: #2f2f2f;
+  color: #fff;
+  font-size: 16px;
+  resize: none; /* Para evitar que el textarea sea redimensionable */
+}
+
+.login-form select::placeholder,
+.login-form textarea::placeholder {
+  color: #fff;
 }

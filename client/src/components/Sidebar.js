@@ -31,9 +31,6 @@ const Sidebar = (props) => {
             <li className={` ${location.pathname === '/metricas' ? 'active current' : ''}`}>
               <Link to="/metricas">METRICAS</Link>
             </li>
-            <li className={` ${location.pathname === '/mapa' ? 'active current' : ''}`}>
-              <Link to="/mapa">MAPA</Link>
-            </li>
           </ul>
         </nav>
       </aside>

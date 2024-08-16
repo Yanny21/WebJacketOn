@@ -30,10 +30,25 @@ const RegistroAct = () => {
       .catch(error => console.error('Fetch error:', error));
   }, []);
 
+  // Get today's date in the format required for datetime-local input
+  const today = new Date().toISOString().slice(0, 16);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
     setSuccess(false);
+
+    // Validación adicional para los campos vacíos
+    if (!actividad || !descripcion || !fech_asig || !fech_lim || !area || !id_usu_asignado || !id_usu_que_asigno) {
+      setError('Por favor, complete todos los campos.');
+      return;
+    }
+
+    // Validación adicional para las fechas
+    if (new Date(fech_lim) < new Date(fech_asig)) {
+      setError('La fecha límite no puede ser anterior a la fecha de asignación.');
+      return;
+    }
 
     const formData = {
       actividad,
@@ -100,27 +115,36 @@ const RegistroAct = () => {
               placeholder="Descripción" 
               value={descripcion} 
               onChange={(e) => setDescripcion(e.target.value)} 
+              required
             ></textarea>
-            <label for="fech_asig">Fecha asignada</label>
+            <label htmlFor="fech_asig">Fecha asignada</label>
             <input 
               type="datetime-local" 
               value={fech_asig} 
               onChange={(e) => setFechAsig(e.target.value)} 
               required 
+              min={today}
             />
-            <label for="fech_lim">Fecha límite</label>
+            <label htmlFor="fech_lim">Fecha límite</label>
             <input 
               type="datetime-local" 
               value={fech_lim} 
               onChange={(e) => setFechLim(e.target.value)} 
               required 
+              min={today}
             />
-            <input 
-              type="text" 
-              placeholder="Área" 
+            <select 
               value={area} 
               onChange={(e) => setArea(e.target.value)} 
-            />
+              required
+            >
+              <option value="">Seleccionar área</option>
+              <option value="Producción">Producción</option>
+              <option value="Control de Calidad">Control de Calidad</option>
+              <option value="Mantenimiento">Mantenimiento</option>
+              <option value="Gestión de Residuos">Gestión de Residuos</option>
+            </select>
+
             <select 
               value={id_usu_asignado} 
               onChange={(e) => setIdUsuAsignado(e.target.value)} 

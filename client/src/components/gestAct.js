@@ -1,11 +1,31 @@
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import './Dash.css';
 import Sidebar from './Sidebar';
 
 const GestAct = () => {
+  Modal.setAppElement('#root');
+
   const [activities, setActivities] = useState([]);
+  const [mapModalIsOpen, setMapModalIsOpen] = useState(false);
+  const [mapCenter, setMapCenter] = useState({ lat: 19.432608, lng: -99.133209 }); // Coordenadas iniciales
   const navigate = useNavigate();
+
+  // Coordenadas de las áreas
+  const areaCoordinates = {
+    'Producción': { lat: 20.123212608, lng: -100.133209 },
+    'Control de Calidad': { lat: 19.434, lng: -10.4123415 },
+    'Mantenimiento': { lat: 40.436, lng: -101.137 },
+    'Gestión de Residuos': { lat: 13.438, lng: -99.139 },
+  };
+
+  // Cargar la API de Google Maps
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: 'AIzaSyDd9-EpgQGtD0sdSGvwHG03IZ_ybGuV_lA', // Reemplaza con tu clave de API de Google Maps
+  });
 
   useEffect(() => {
     const session = JSON.parse(localStorage.getItem('userSession'));
@@ -20,7 +40,6 @@ const GestAct = () => {
     fetch('http://localhost/webJacketOn/server/getActivities.php')
       .then(response => response.json())
       .then(data => {
-        console.log("Fetched activities:", data);
         setActivities(data);
       })
       .catch(error => {
@@ -54,25 +73,40 @@ const GestAct = () => {
       });
     }
   };
-  
+
+  const openMapModal = (area) => {
+    // Obtener las coordenadas según el área
+    const coordinates = areaCoordinates[area];
+    if (coordinates) {
+      setMapCenter(coordinates);
+      setMapModalIsOpen(true);
+    } else {
+      console.error('Área no encontrada', area);
+    }
+  };
+
+  const closeMapModal = () => {
+    setMapModalIsOpen(false);
+  };
 
   return (
     <div className="dashboard">
       <Sidebar />
       <main className="main-content">
         <section className="employee-management">
-          <h1>GESTION DE ACTIVIDADES</h1>
+          <h1>GESTIÓN DE ACTIVIDADES</h1>
           <table className="table">
             <thead>
               <tr>
                 <th>Nombre</th>
                 <th>Fecha asignada</th>
-                <th>Fecha limite</th>
+                <th>Fecha límite</th>
                 <th>Fecha inicio</th>
                 <th>Fecha fin</th>
-                <th>Area</th>
-                <th>Asignado a</th>
+                <th>Área</th>
+                <th>Asignado</th>
                 <th>Asignó</th>
+                <th>Descripción</th>
                 <th>Acciones</th>
                 <th>Maps</th>
               </tr>
@@ -88,18 +122,36 @@ const GestAct = () => {
                   <td>{activity.area}</td>
                   <td>{activity.nom_usu_asignado}</td>
                   <td>{activity.nom_usu_que_asigno}</td>
+                  <td>{activity.descripcion}</td>
                   <td>
                     <button className="btn btn-edit" onClick={() => handleEditarActividad(activity.id_act)}>Editar</button>
                     <button className="btn btn-delete" onClick={() => handleEliminarActividad(activity.id_act)}>Eliminar</button>
                   </td>
                   <td>
-                  <button className="btn btn-delete" onClick={() => handleEliminarActividad(activity.id_act)}>Area</button>
+                    <button onClick={() => openMapModal(activity.area)}>Ver en mapa</button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <button className="btn btn-add" onClick={handleAgregarActividad}>+ AGREGAR NUEVA ACTIVIDAD</button>
+          <button className="btn btn-primary" onClick={handleAgregarActividad}>Agregar Actividad</button>
+          <Modal
+            isOpen={mapModalIsOpen}
+            onRequestClose={closeMapModal}
+            contentLabel="Mapa"
+          >
+            <h2>Ubicación en el mapa</h2>
+            <button onClick={closeMapModal}>Cerrar</button>
+            {isLoaded ? (
+              <GoogleMap
+                mapContainerStyle={{ height: "400px", width: "100%" }}
+                center={mapCenter}
+                zoom={10}
+              />
+            ) : (
+              <p>Cargando mapa...</p>
+            )}
+          </Modal>
         </section>
       </main>
     </div>
