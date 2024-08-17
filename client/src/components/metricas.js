@@ -6,6 +6,7 @@ import HighchartsReact from 'highcharts-react-official';
 import HighchartsMore from 'highcharts/highcharts-more';
 import { db } from './firebaseConfig';
 import { collection, getDocs, query } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
 // Initialize the HighchartsMore module
 HighchartsMore(Highcharts);
@@ -19,16 +20,27 @@ const Metricas = () => {
   const [error, setError] = useState(null);
   const [selectedDevice, setSelectedDevice] = useState(null);
   const [selectedMetric, setSelectedMetric] = useState('HeartRate');
+  const navigate = useNavigate();
+
+  // Check session and redirect if not valid
+  useEffect(() => {
+    const session = JSON.parse(localStorage.getItem('userSession'));
+    if (!session) {
+      navigate('/login');
+    } else {
+      fetchUsersWithDevices();
+    }
+  }, [navigate]);
 
   // Fetch users with devices
-  useEffect(() => {
+  const fetchUsersWithDevices = () => {
     fetch('http://localhost:8080/webJacketOn/server/getUsersWithDevices.php')
       .then(response => response.json())
       .then(data => setUsers(data))
       .catch(error => console.error('Error al obtener los usuarios:', error));
-  }, []);
+  };
 
-  // Fetch device data
+  // Fetch device data when a device is selected
   useEffect(() => {
     if (selectedDevice) {
       const fetchDeviceData = async () => {
@@ -38,7 +50,7 @@ const Metricas = () => {
           const data = querySnapshot.docs.map(doc => doc.data());
 
           const formattedData = data.map(device => ({
-            x: new Date(device.createdAt.seconds * 1000).getTime(), // Convertir a milisegundos
+            x: new Date(device.createdAt.seconds * 1000).getTime(),
             y: device[selectedMetric]
           }));
 
@@ -59,13 +71,13 @@ const Metricas = () => {
     setTipoMetrica(tipo);
     setSelectedDevice(device);
     setMostrarModal(true);
-    setSelectedMetric(tipo === 'Personales' ? 'HeartRate' : 'MQ7_AO'); // Valor por defecto según el tipo de métrica
+    setSelectedMetric(tipo === 'Personales' ? 'HeartRate' : 'MQ7_AO');
   };
 
   const cerrarModal = () => {
     setMostrarModal(false);
     setTipoMetrica('');
-    setSelectedMetric('HeartRate'); // Resetear la métrica seleccionada al cerrar el modal
+    setSelectedMetric('HeartRate');
   };
 
   // Highcharts options
