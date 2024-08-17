@@ -3,9 +3,9 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import HighchartsMore from 'highcharts/highcharts-more';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Dash.css';
 import { db } from './firebaseConfig';
-import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 
 // Initialize the HighchartsMore module
@@ -34,7 +34,7 @@ const Metricas = () => {
 
   // Fetch users with devices
   const fetchUsersWithDevices = () => {
-    fetch('http://localhost:8080/webJacketOn/server/getUsersWithDevices.php')
+    fetch('http://localhost/webJacketOn/server/getUsersWithDevices.php')
       .then(response => response.json())
       .then(data => setUsers(data))
       .catch(error => console.error('Error al obtener los usuarios:', error));

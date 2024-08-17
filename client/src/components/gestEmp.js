@@ -17,7 +17,7 @@ const GestEmp = () => {
   }, [navigate]);
 
   const fetchEmployees = () => {
-    fetch('http://localhost:8080/webJacketOn/server/getEmployees.php')
+    fetch('http://localhost/webJacketOn/server/getEmployees.php')
       .then(response => response.json())
       .then(data => {
         setEmployees(data);
@@ -39,7 +39,7 @@ const GestEmp = () => {
     const newStatus = currentStatus === 1 ? 0 : 1;
     const action = newStatus === 0 ? 'eliminar' : 'activar';
     if (window.confirm(`¿Estás seguro de ${action} este empleado?`)) {
-      fetch(`http://localhost:8080/webJacketOn/server/updateEmployeeStatus.php?id_usu=${id}&estatus=${newStatus}`, {
+      fetch(`http://localhost/webJacketOn/server/updateEmployeeStatus.php?id_usu=${id}&estatus=${newStatus}`, {
         method: 'POST',
       })
         .then(response => response.json())

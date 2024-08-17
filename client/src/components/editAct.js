@@ -17,19 +17,19 @@ const EditAct = () => {
 
   useEffect(() => {
     // Fetch empleados
-    fetch('http://localhost:8080/webJacketOn/server/getEmployees.php')
+    fetch('http://localhost/webJacketOn/server/getEmployees.php')
       .then(response => response.json())
       .then(data => setEmpleados(data))
       .catch(error => console.error('Fetch error:', error));
 
     // Fetch supervisores
-    fetch('http://localhost:8080/webJacketOn/server/getSupervisors.php')
+    fetch('http://localhost/webJacketOn/server/getSupervisors.php')
       .then(response => response.json())
       .then(data => setSupervisores(data))
       .catch(error => console.error('Fetch error:', error));
 
     // Fetch actividad data para editar
-    fetch(`http://localhost:8080/webJacketOn/server/getActivity.php?id_act=${id}`)
+    fetch(`http://localhost/webJacketOn/server/getActivity.php?id_act=${id}`)
       .then(response => response.json())
       .then(data => {
         if (data.error) {
@@ -63,7 +63,7 @@ const EditAct = () => {
       id_usu_que_asigno: idUsuQueAsigno,
     };
 
-    fetch('http://localhost:8080/webJacketOn/server/updateActivity.php', {
+    fetch('http://localhost/webJacketOn/server/updateActivity.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

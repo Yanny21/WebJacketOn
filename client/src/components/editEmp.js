@@ -11,7 +11,7 @@ const EditEmp = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:8080/webJacketOn/server/getEmployee.php?id_usu=${id}`)
+    fetch(`http://localhost/webJacketOn/server/getEmployee.php?id_usu=${id}`)
       .then(response => response.json())
       .then(data => {
         if (data.error) {
@@ -42,7 +42,7 @@ const EditEmp = () => {
     formData.append('email_usu', email);
     formData.append('pass_usu', password);
 
-    fetch('http://localhost:8080/webJacketOn/server/updateEmployee.php', {
+    fetch('http://localhost/webJacketOn/server/updateEmployee.php', {
       method: 'POST',
       body: formData
     })

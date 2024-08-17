@@ -22,7 +22,7 @@ const RegistroEmp = () => {
     formData.append('email_usu', email);
     formData.append('pass_usu', password);
 
-    fetch('http://localhost:8080/webJacketOn/server/registerEmployee.php', {
+    fetch('http://localhost/webJacketOn/server/registerEmployee.php', {
       method: 'POST',
       body: formData
     })

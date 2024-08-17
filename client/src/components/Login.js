@@ -16,7 +16,7 @@ const Login = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8080/webJacketOn/server/login.php', {
+      const response = await fetch('http://localhost/webJacketOn/server/login.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ const Login = () => {
       const email = decoded.email || decoded.email_address;
 
       if (email) {
-        axios.post('http://localhost:8080/webJacketOn/server/googleLogin.php', {
+        axios.post('http://localhost/webJacketOn/server/googleLogin.php', {
           email: email
         }).then((response) => {
           if (response.data.success) {

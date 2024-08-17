@@ -11,7 +11,7 @@ const Editar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:8080/webJacketOn/server/getSupervisor.php?id_usu=${id}`)
+    fetch(`http://localhost/webJacketOn/server/getSupervisor.php?id_usu=${id}`)
       .then(response => response.json())
       .then(data => {
         if (data.error) {
@@ -42,7 +42,7 @@ const Editar = () => {
     formData.append('email_usu', email);
     formData.append('pass_usu', password);
 
-    fetch('http://localhost:8080/webJacketOn/server/updateSupervisor.php', {
+    fetch('http://localhost/webJacketOn/server/updateSupervisor.php', {
       method: 'POST',
       body: formData
     })

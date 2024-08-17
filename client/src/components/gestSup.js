@@ -17,7 +17,7 @@ const GestSup = () => {
   }, [navigate]); // Agrega navigate aquí
   
   const fetchSupervisors = () => {
-    fetch('http://localhost:8080/webJacketOn/server/getSupervisors.php')
+    fetch('http://localhost/webJacketOn/server/getSupervisors.php')
       .then(response => response.json())
       .then(data => {
         console.log("Fetched data:", data); // Log para verificar datos recibidos
@@ -43,7 +43,7 @@ const GestSup = () => {
       : "¿Estás seguro de activar este supervisor?";
     
     if (window.confirm(confirmMessage)) {
-      fetch(`http://localhost:8080/webJacketOn/server/updateSupervisorStatus.php?id_usu=${id}&estatus=${newEstatus}`, {
+      fetch(`http://localhost/webJacketOn/server/updateSupervisorStatus.php?id_usu=${id}&estatus=${newEstatus}`, {
         method: 'GET',  // Asegurarse de que sea GET si se usa $_GET en PHP
       })
       .then(response => response.json())

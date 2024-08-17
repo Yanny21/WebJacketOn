@@ -18,13 +18,13 @@ const RegistroAct = () => {
 
   useEffect(() => {
     // Fetch empleados
-    fetch('http://localhost:8080/webJacketOn/server/getEmployees.php')
+    fetch('http://localhost/webJacketOn/server/getEmployees.php')
       .then(response => response.json())
       .then(data => setEmpleados(data))
       .catch(error => console.error('Fetch error:', error));
 
     // Fetch supervisores
-    fetch('http://localhost:8080/webJacketOn/server/getSupervisors.php')
+    fetch('http://localhost/webJacketOn/server/getSupervisors.php')
       .then(response => response.json())
       .then(data => setSupervisores(data))
       .catch(error => console.error('Fetch error:', error));
@@ -61,7 +61,7 @@ const RegistroAct = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:8080/webJacketOn/server/addActivity.php', {
+      const response = await fetch('http://localhost/webJacketOn/server/addActivity.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
