@@ -59,7 +59,7 @@ const Login = () => {
       const email = decoded.email || decoded.email_address;
 
       if (email) {
-        axios.post('http://localhost/webJacketOn/server/googleLogin.php', {
+        axios.post('http://localhost:8080/webJacketOn/server/googleLogin.php', {
           email: email
         }).then((response) => {
           if (response.data.success) {

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import './Dash.css';
-import Sidebar from './Sidebar';
+import { collection, getDocs, query } from 'firebase/firestore';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import HighchartsMore from 'highcharts/highcharts-more';
+import React, { useEffect, useState } from 'react';
+import './Dash.css';
 import { db } from './firebaseConfig';
-import { collection, getDocs, query } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import Sidebar from './Sidebar';
 
 // Initialize the HighchartsMore module
 HighchartsMore(Highcharts);

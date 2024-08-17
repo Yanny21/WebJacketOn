@@ -12,6 +12,9 @@ $id_act = $_GET['id_act'];
 // Escapar el valor para evitar inyecciones SQL
 $id_act = $conn->real_escape_string($id_act);
 
+// Escapar el valor para evitar inyecciones SQL
+$id_act = $conn->real_escape_string($id_act);
+
 $sql = "SELECT * FROM actividades WHERE id_act='$id_act'";
 $result = $conn->query($sql);
 
