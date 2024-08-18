@@ -1,25 +1,29 @@
 <?php
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');  // Permitir acceso desde cualquier origen
-header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Origin: http://localhost:3000');  // Permitir acceso desde http://localhost:3000
+header('Access-Control-Allow-Methods: GET');  // Permitir solo métodos GET
+header('Access-Control-Allow-Headers: Content-Type');
 
 include 'db_connection.php';  // Incluir el archivo de conexión
 $conn = openConnection();  // Usar la función para abrir la conexión
-
 $id_usu = $_GET['id_usu'];
 $estatus = $_GET['estatus'];
 
-$sql = "UPDATE usuarios SET estatus = $estatus WHERE id_usu = $id_usu";
-$response = array();
+// Log para verificar datos recibidos
+error_log("id_usu: " . $id_usu);
+error_log("estatus: " . $estatus);
+
+$sql = "UPDATE usuarios SET estatus='$estatus' WHERE id_usu='$id_usu' AND tipo_usu='empleado'";
+
+// Log para verificar la consulta SQL
+error_log("SQL Query: " . $sql);
 
 if ($conn->query($sql) === TRUE) {
-    $response['success'] = true;
+    // Devolver el estatus actualizado junto con la respuesta de éxito
+    echo json_encode(['success' => true, 'estatus' => $estatus]);
 } else {
-    $response['success'] = false;
-    $response['error'] = $conn->error;
+    echo json_encode(['success' => false, 'error' => $conn->error]);
 }
 
-echo json_encode($response);
 closeConnection($conn);  // Cerrar la conexión
 ?>

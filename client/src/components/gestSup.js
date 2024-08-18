@@ -14,13 +14,13 @@ const GestSup = () => {
     } else {
       fetchSupervisors();
     }
-  }, [navigate]); // Agrega navigate aquí
-  
+  }, [navigate]);
+
   const fetchSupervisors = () => {
     fetch('http://localhost:8080/webJacketOn/server/getSupervisors.php')
       .then(response => response.json())
       .then(data => {
-        console.log("Fetched data:", data); // Log para verificar datos recibidos
+        console.log("Fetched data:", data);
         setSupervisors(data);
       })
       .catch(error => {
@@ -44,13 +44,12 @@ const GestSup = () => {
     
     if (window.confirm(confirmMessage)) {
       fetch(`http://localhost:8080/webJacketOn/server/updateSupervisorStatus.php?id_usu=${id}&estatus=${newEstatus}`, {
-        method: 'GET',  // Asegurarse de que sea GET si se usa $_GET en PHP
+        method: 'GET', 
       })
       .then(response => response.json())
       .then(data => {
-        console.log("Server response:", data);  // Log para verificar la respuesta del servidor
+        console.log("Server response:", data);  
         if (data.success) {
-          // Actualizar la lista de supervisores después de cambiar el estatus
           const updatedSupervisors = supervisors.map(supervisor => {
             if (supervisor.id_usu === id) {
               return { ...supervisor, estatus: newEstatus };
@@ -90,7 +89,7 @@ const GestSup = () => {
                   <td>{supervisor.nom_usu}</td>
                   <td>{supervisor.app_usu}</td>
                   <td>{supervisor.email_usu}</td>
-                  <td>{supervisor.estatus === 1 ? 'Activo' : 'Inactivo'}</td>
+                  <td>{supervisor.estatus}</td>
                   <td>
                     <button className="btn btn-edit" onClick={() => handleEditarSupervisor(supervisor.id_usu)}>Editar</button>
                     <button
