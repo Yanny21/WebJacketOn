@@ -179,6 +179,11 @@ body {
   color: #fff; /* Color del texto */
 }
 
+.btn-activate {
+  background-color: #333557;
+  color: white;
+}
+
 .btn-add {
   background-color: #F2E527; /* Color de fondo */
   color: #fff; /* Color del texto con transparencia */
@@ -281,10 +286,10 @@ body {
 
 .modal-content {
   background-color: #fefefe;
-  padding: 20px;
+  padding: 30px;
   border-radius: 4px;
   width: 80%;
-  max-width: 600px;
+  max-width: 700px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   animation: slide-in 0.5s ease-out;
 }
@@ -316,6 +321,52 @@ body {
 }
 
 .btn-map {
-  background-color: #2196F3;
+  background-color: #333557;
   color: white;
+}
+/* Estilo del select */
+select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f8f9fa; /* Fondo claro */
+  font-size: 16px;
+  color: #333;
+  width: 100%;
+  box-sizing: border-box;
+  appearance: none; /* Quitar la flecha predeterminada del select */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+
+/* Contenedor de select para mostrar una flecha personalizada */
+.select-container {
+  position: relative;
+  width: 100%;
+}
+
+.select-container::after {
+  content: '▼'; /* Icono de flecha personalizada */
+  font-size: 12px;
+  color: #333;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  pointer-events: none; /* Para que la flecha no interfiera con el select */
+}
+
+/* Estilo de las opciones (pseudoclase :hover en el contenedor) */
+option {
+  padding: 10px;
+  background-color: #fff;
+  color: #333;
+  font-size: 16px;
+}
+
+/* Estilo para hover en las opciones (en algunos navegadores puede no ser aplicable) */
+select option:hover {
+  background-color: #F2E527;
+  color: #333;
 }

@@ -20,8 +20,14 @@ body {
 .registro-header h1 {
   font-size: 32px;
   color: #000;
-  margin-top: 150px;
-  margin-bottom: 50px;
+  margin-top: 50px; 
+}
+
+.h1Act {
+  font-size: 32px;
+  color: #000;
+  margin-top: 150px !important;
+  margin-bottom: 50px !important;
 }
 
 .registro-main {
@@ -67,6 +73,11 @@ body {
 .registro-form input::placeholder {
   color: #fff;
 }
+
+.alert-margin {
+  margin-bottom: 20px; /* Ajusta el margen según sea necesario */
+}
+
 
 .registro-button {
   width: 100%;
@@ -180,7 +191,9 @@ body {
 
 .social-login {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
 }
 
 .google-login, .facebook-login {

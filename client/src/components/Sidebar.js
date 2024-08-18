@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Dash.css';
 
 const Sidebar = (props) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
+  };
+
+  const handleLogout = () => {
+    // Clear the session data
+    localStorage.removeItem('userSession');
+    // Redirect to the login page
+    navigate('/login');
   };
 
   return (
@@ -16,19 +24,19 @@ const Sidebar = (props) => {
         <h2>Jacket - On</h2>
         <nav>
           <ul>
-            <li className={` ${location.pathname === '/supervisores' ? 'active current' : ''}`}>
+            <li className={`${location.pathname === '/supervisores' ? 'active current' : ''}`}>
               <Link to="/supervisores">GESTION DE SUPERVISORES</Link>
             </li>
-            <li className={` ${location.pathname === '/empleados' ? 'active current' : ''}`}>
+            <li className={`${location.pathname === '/empleados' ? 'active current' : ''}`}>
               <Link to="/empleados">GESTION DE EMPLEADOS</Link>
             </li>
-            <li className={` ${location.pathname === '/actividades' ? 'active current' : ''}`}>
+            <li className={`${location.pathname === '/actividades' ? 'active current' : ''}`}>
               <Link to="/actividades">GESTION DE ACTIVIDADES</Link>
             </li>
-            <li className={` ${location.pathname === '/graficasyrep' ? 'active current' : ''}`}>
+            <li className={`${location.pathname === '/graficasyrep' ? 'active current' : ''}`}>
               <Link to="/graficasyrep">GRAFICAS Y REPORTES</Link>
             </li>
-            <li className={` ${location.pathname === '/metricas' ? 'active current' : ''}`}>
+            <li className={`${location.pathname === '/metricas' ? 'active current' : ''}`}>
               <Link to="/metricas">METRICAS</Link>
             </li>
           </ul>
@@ -55,7 +63,7 @@ const Sidebar = (props) => {
               </svg>
               <div className="dropdown-menu">
                 <button onClick={() => console.log('Editar perfil')}>Editar perfil</button>
-                <button onClick={() => console.log('Cerrar sesión')}>Cerrar sesión</button>
+                <button onClick={handleLogout}>Cerrar sesión</button>
               </div>
             </div>
           </div>

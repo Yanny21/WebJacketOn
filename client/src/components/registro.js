@@ -1,3 +1,4 @@
+import Alert from '@mui/material/Alert'; // Importa la alerta de Material-UI
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './formularios.css';
@@ -7,14 +8,51 @@ const Registro = () => {
   const [apellido, setApellido] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleRegresar = () => {
     navigate('/supervisores');
   };
 
+  const validatePassword = (password) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (password.length < minLength) {
+      return 'La contraseña debe tener al menos 8 caracteres.';
+    }
+    if (!hasUpperCase) {
+      return 'La contraseña debe contener al menos una letra mayúscula.';
+    }
+    if (!hasLowerCase) {
+      return 'La contraseña debe contener al menos una letra minúscula.';
+    }
+    if (!hasNumber) {
+      return 'La contraseña debe contener al menos un número.';
+    }
+    if (!hasSpecialChar) {
+      return 'La contraseña debe contener al menos un carácter especial.';
+    }
+    return '';
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (!nombre || !apellido || !email || !password) {
+      setError('Todos los campos son obligatorios.');
+      return;
+    }
+
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      setError(passwordError);
+      return;
+    }
 
     const formData = new FormData();
     formData.append('nom_usu', nombre);
@@ -31,11 +69,12 @@ const Registro = () => {
       if (data.success) {
         navigate('/supervisores');
       } else {
-        alert('Error registrando supervisor: ' + data.error);
+        setError('Error registrando supervisor: ' + data.error);
       }
     })
     .catch(error => {
       console.error('Fetch error:', error);
+      setError('Hubo un problema con la solicitud. Intente nuevamente.');
     });
   };
 
@@ -48,11 +87,36 @@ const Registro = () => {
         <div className="login-form-container">
           <h2>Registro de supervisores</h2>
           <p>Ingrese todos los datos</p>
+          {error && <Alert severity="warning" style={{ marginBottom: '20px' }}>{error}</Alert>} {/* Alerta de Material-UI */}
           <form className="login-form" onSubmit={handleSubmit}>
-            <input type="text" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
-            <input type="text" placeholder="Apellido" value={apellido} onChange={(e) => setApellido(e.target.value)} />
-            <input type="email" placeholder="email@domain.com" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <input
+              type="text"
+              placeholder="Nombre"
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Apellido"
+              value={apellido}
+              onChange={(e) => setApellido(e.target.value)}
+              required
+            />
+            <input
+              type="email"
+              placeholder="email@domain.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
             <button type="submit" className="login-button">Registrar</button>
           </form>
           <button className="pregunta-cuenta-button" onClick={handleRegresar}>Volver</button>

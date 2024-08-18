@@ -87,7 +87,7 @@ const RegistroAct = () => {
   return (
     <div className="login-container">
       <header className="registro-header">
-        <h1>Jacket - On</h1>
+        <h1 className="h1Act">Jacket - On</h1>
       </header>
       <main className="login-main">
         <div className="login-form-container">

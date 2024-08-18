@@ -45,6 +45,7 @@ const GestSup = () => {
     if (window.confirm(confirmMessage)) {
       fetch(`http://localhost:8080/webJacketOn/server/updateSupervisorStatus.php?id_usu=${id}&estatus=${newEstatus}`, {
         method: 'GET', 
+
       })
       .then(response => response.json())
       .then(data => {
