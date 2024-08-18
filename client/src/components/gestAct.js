@@ -1,7 +1,8 @@
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
+import './CustomMapModal.css'; // Importa el nuevo archivo CSS
 import './Dash.css';
 import Sidebar from './Sidebar';
 
@@ -15,10 +16,10 @@ const GestAct = () => {
 
   // Coordenadas de las áreas
   const areaCoordinates = {
-    'Producción': { lat: 20.123212608, lng: -100.133209 },
-    'Control de Calidad': { lat: 19.434, lng: -10.4123415 },
-    'Mantenimiento': { lat: 40.436, lng: -101.137 },
-    'Gestión de Residuos': { lat: 13.438, lng: -99.139 },
+    'Producción': { lat: 20.8323815, lng: -100.4304209 },
+    'Control de Calidad': { lat: 20.8324664, lng: -100.4325934 },
+    'Mantenimiento': { lat: 20.8302597, lng: -100.4301402 },
+    'Gestión de Residuos': { lat: 20.8289887, lng: -100.4328402 },
   };
 
   // Cargar la API de Google Maps
@@ -103,12 +104,12 @@ const GestAct = () => {
                 <th>Fecha límite</th>
                 <th>Fecha inicio</th>
                 <th>Fecha fin</th>
-                <th>Área</th>
                 <th>Asignado</th>
                 <th>Asignó</th>
                 <th>Descripción</th>
+                <th>Área</th>
                 <th>Acciones</th>
-                <th>Maps</th>
+                <th>Mapa</th>
               </tr>
             </thead>
             <tbody>
@@ -119,38 +120,47 @@ const GestAct = () => {
                   <td>{activity.fech_lim}</td>
                   <td>{activity.fech_ini}</td>
                   <td>{activity.fech_fin}</td>
-                  <td>{activity.area}</td>
                   <td>{activity.nom_usu_asignado}</td>
                   <td>{activity.nom_usu_que_asigno}</td>
                   <td>{activity.descripcion}</td>
+                  <td>{activity.area}</td>
                   <td>
                     <button className="btn btn-edit" onClick={() => handleEditarActividad(activity.id_act)}>Editar</button>
                     <button className="btn btn-delete" onClick={() => handleEliminarActividad(activity.id_act)}>Eliminar</button>
                   </td>
                   <td>
-                    <button onClick={() => openMapModal(activity.area)}>Ver en mapa</button>
+                    <button className="btn btn-map" onClick={() => openMapModal(activity.area)}>Ver</button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <button className="btn btn-primary" onClick={handleAgregarActividad}>Agregar Actividad</button>
+          <button className="btn btn-add" onClick={handleAgregarActividad}> + Agregar Actividad</button>
           <Modal
             isOpen={mapModalIsOpen}
             onRequestClose={closeMapModal}
             contentLabel="Mapa"
+            className="custom-modal"
+            overlayClassName="custom-overlay"
+            ariaHideApp={false}
           >
-            <h2>Ubicación en el mapa</h2>
-            <button onClick={closeMapModal}>Cerrar</button>
-            {isLoaded ? (
-              <GoogleMap
-                mapContainerStyle={{ height: "400px", width: "100%" }}
-                center={mapCenter}
-                zoom={10}
-              />
-            ) : (
-              <p>Cargando mapa...</p>
-            )}
+            <div className="modal-content">
+              <span className="close" onClick={closeMapModal}>&times;</span>
+              <h2 style={{ textAlign: 'center', margin: '10px' }}>Ubicación del área</h2>
+              {isLoaded ? (
+                <div className="map-container">
+                  <GoogleMap
+                    mapContainerStyle={{ height: "100%", width: "100%" }}
+                    center={mapCenter}
+                    zoom={15}
+                  >
+                    <Marker position={mapCenter} /> {/* Añade el marcador rojo */}
+                  </GoogleMap>
+                </div>
+              ) : (
+                <p style={{ textAlign: 'center' }}>Cargando mapa...</p>
+              )}
+            </div>
           </Modal>
         </section>
       </main>

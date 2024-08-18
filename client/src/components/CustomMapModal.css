@@ -1,0 +1,58 @@
+.custom-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 50px; /* Ajusta según la separación deseada */
+}
+
+/* Estilo para el modal */
+.custom-modal {
+    border-radius: 4px;
+    width: 90%; /* Aumenta el ancho al 90% */
+    max-width: 1000px; /* Ajusta el máximo ancho, por ejemplo, a 1000px */
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Estilo para el contenido del modal */
+.modal-content {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    background-color: #fefefe;
+    padding: 30px;
+    border-radius: 4px;
+    width: 80%;
+    max-width: 700px;
+    max-height: 900px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: slide-in 0.5s ease-out;
+  }
+/* Estilo para el botón de cerrar */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Estilo para el mapa */
+.map-container {
+    flex-grow: 1;
+    width: 100%;
+    height: calc(100% - 100px); /* Restar el tamaño del título */
+    margin: 0;
+}

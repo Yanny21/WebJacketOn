@@ -192,21 +192,24 @@ const Metricas = () => {
             {/* Selector de métrica */}
             <div>
               <label>Selecciona una métrica:</label>
-              <select value={selectedMetric} onChange={(e) => setSelectedMetric(e.target.value)}>
-                {tipoMetrica === 'Personales' ? (
-                  <>
-                    <option value="HeartRate">Ritmo Cardíaco</option>
-                    <option value="SpO2">SPO2</option>
-                  </>
-                ) : (
-                  <>
-                    <option value="MQ7_AO">MQ7</option>
-                    <option value="MQ135_AO">MQ135</option>
-                    <option value="Humidity">Humedad</option>
-                    <option value="Temperature">Temperatura</option>
-                  </>
-                )}
-              </select>
+              <div className="select-container">
+  <select value={selectedMetric} onChange={(e) => setSelectedMetric(e.target.value)}>
+    {tipoMetrica === 'Personales' ? (
+      <>
+        <option value="HeartRate">Ritmo Cardíaco</option>
+        <option value="SpO2">SPO2</option>
+      </>
+    ) : (
+      <>
+        <option value="MQ7_AO">MQ7</option>
+        <option value="MQ135_AO">MQ135</option>
+        <option value="Humidity">Humedad</option>
+        <option value="Temperature">Temperatura</option>
+      </>
+    )}
+  </select>
+</div>
+
             </div>
 
             {loading ? (

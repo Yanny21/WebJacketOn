@@ -104,6 +104,7 @@ const EditAct = () => {
               placeholder="Descripción" 
               value={descripcion} 
               onChange={(e) => setDescripcion(e.target.value)} 
+              required
             ></textarea>
             <label htmlFor="fech_asig">Fecha asignada</label>
             <input 
@@ -112,6 +113,7 @@ const EditAct = () => {
               onChange={(e) => setFechAsig(e.target.value)} 
               required 
             />
+
             <label htmlFor="fech_lim">Fecha límite</label>
             <input 
               type="datetime-local" 
@@ -119,12 +121,19 @@ const EditAct = () => {
               onChange={(e) => setFechLim(e.target.value)} 
               required 
             />
-            <input 
-              type="text" 
-              placeholder="Área" 
+
+             <select 
               value={area} 
               onChange={(e) => setArea(e.target.value)} 
-            />
+              required
+            >
+              <option value="">Seleccionar área</option>
+              <option value="Producción">Producción</option>
+              <option value="Control de Calidad">Control de Calidad</option>
+              <option value="Mantenimiento">Mantenimiento</option>
+              <option value="Gestión de Residuos">Gestión de Residuos</option>
+            </select>
+            
             <select 
               value={idUsuAsignado} 
               onChange={(e) => setIdUsuAsignado(e.target.value)} 
