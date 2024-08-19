@@ -38,7 +38,7 @@ const GestAct = () => {
   }, [navigate]);
 
   const fetchActivities = () => {
-    fetch('http://localhost:8080/webJacketOn/server/getActivities.php')
+    fetch('http://localhost/webJacketOn/server/getActivities.php')
       .then(response => response.json())
       .then(data => {
         setActivities(data);
@@ -58,7 +58,7 @@ const GestAct = () => {
 
   const handleEliminarActividad = (id) => {
     if (window.confirm("¿Estás seguro de eliminar esta actividad?")) {
-      fetch(`http://localhost:8080/webJacketOn/server/deleteActivity.php?id_act=${id}&estatus=0`, {
+      fetch(`http://localhost/webJacketOn/server/deleteActivity.php?id_act=${id}&estatus=0`, {
         method: 'POST',
       })
       .then(response => response.json())

@@ -17,7 +17,7 @@ const GestEmp = () => {
   }, [navigate]);
 
   const fetchEmployees = () => {
-    fetch('http://localhost:8080/webJacketOn/server/getEmployees.php')
+    fetch('http://localhost/webJacketOn/server/getEmployees.php')
       .then(response => response.json())
       .then(data => {
         console.log("Fetched data:", data);
@@ -43,7 +43,7 @@ const GestEmp = () => {
       : "¿Estás seguro de activar este empleado?";
     
     if (window.confirm(confirmMessage)) {
-      fetch(`http://localhost:8080/webJacketOn/server/updateEmployeeStatus.php?id_usu=${id}&estatus=${newEstatus}`, {
+      fetch(`http://localhost/webJacketOn/server/updateEmployeeStatus.php?id_usu=${id}&estatus=${newEstatus}`, {
         method: 'GET', 
       })
       .then(response => response.json())

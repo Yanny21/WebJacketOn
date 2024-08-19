@@ -34,7 +34,7 @@ const Metricas = () => {
 
   // Fetch users with devices
   const fetchUsersWithDevices = () => {
-    fetch('http://localhost:8080/webJacketOn/server/getUsersWithDevices.php')
+    fetch('http://localhost/webJacketOn/server/getUsersWithDevices.php')
       .then(response => response.json())
       .then(data => setUsers(data))
       .catch(error => console.error('Error al obtener los usuarios:', error));

@@ -60,7 +60,7 @@ const Registro = () => {
     formData.append('email_usu', email);
     formData.append('pass_usu', password);
 
-    fetch('http://localhost:8080/webJacketOn/server/registerSupervisor.php', {
+    fetch('http://localhost/webJacketOn/server/registerSupervisor.php', {
       method: 'POST',
       body: formData
     })
