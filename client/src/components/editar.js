@@ -68,6 +68,7 @@ const Editar = () => {
           <form className="login-form" onSubmit={handleSubmit}>
             <input type="text" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
             <input type="text" placeholder="Apellido" value={apellido} onChange={(e) => setApellido(e.target.value)} />
+            <input type="text" placeholder="JAMON" value={jamon} onChange={(e) => setjamon(e.target.value)} />
             <input type="email" placeholder="email@domain.com" value={email} onChange={(e) => setEmail(e.target.value)} />
             <input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
             <button type="submit" className="login-button">Guardar cambios</button>
